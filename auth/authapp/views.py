@@ -7,6 +7,7 @@ from . forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
 
 # This is for homepage:
 
@@ -54,7 +55,16 @@ def my_login(request):
     return render(request, 'authapp/my-login.html', context=context)
 
 
+# This is for user logout:
+
+def user_logout(request):
+    
+    auth.logout(request)
+    return redirect("")
+
+
 # This is for dashboard
 
+@login_required(login_url="my_login")
 def dashboard(request):
     return render(request, 'authapp/dashboard.html')
